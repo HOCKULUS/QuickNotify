@@ -7,11 +7,11 @@ $Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
 $Form.text                       = "Form"
 $Form.TopMost                    = $true
 $Form.BackColor                  = [System.Drawing.ColorTranslator]::FromHtml("#ffffff")
-$Form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
-$Form.Location.X = -300
-$Form.Location.y = -300
-$Poistion = 'RightBottom'
-$Coordinates = switch ($Poistion)
+$Form.FormBorderStyle            = [System.Windows.Forms.FormBorderStyle]::None
+$Form.Location.X                 = -300
+$Form.Location.y                 = -300
+$Poistion                        = 'RightBottom'
+$Coordinates                     = switch ($Poistion)
 {
     'LeftTop' { 0, 0 }
     'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height) }
@@ -57,54 +57,54 @@ $CheckBox1.ForeColor             = [System.Drawing.ColorTranslator]::FromHtml("#
 
 $Form.controls.AddRange(@($Button_ok,$PictureBox1,$Label1,$CheckBox1))
 
-$global:a = 1 #if $a is 0 the MasseBox topmost set to false
+$global:a                        = 1 #if $a is 0 the MasseBox topmost set to false
 
 $Button_ok.Add_Click({
-    $global:a = 0
+    $global:a                    = 0
     while($global:sitze -gt 0){
-        $global:sitze -= 2 #Animationspeed
-        $Coordinates = switch ($Poistion)
+        $global:sitze           -= 2 #Animationspeed
+        $Coordinates             = switch ($Poistion)
         { #Screensize
             'LeftTop' { 0, 0 }
             'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze + 2 ) }
             'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
             'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze +2) }
         }
-        $Form.Location = New-Object System.Drawing.Point($Coordinates) #low slide down
+        $Form.Location           = New-Object System.Drawing.Point($Coordinates) #low slide down
         Start-Sleep -Milliseconds 1 #CPU Performace improved
     }
     [void]$Form.Hide()
 })
 
 $Form.Add_MouseHover({
-    $global:topmost = 1
+    $global:topmost              = 1
 })
 $Form.Add_MouseLeave({
-    $global:topmost = 0
+    $global:topmost              = 0
 })
 $CheckBox1.Add_MouseHover({
-    $global:topmost = 1
+    $global:topmost              = 1
 })
 $CheckBox1.Add_MouseLeave({
-    $global:topmost = 0
+    $global:topmost              = 0
 })
 $Label1.Add_MouseHover({
-    $global:topmost = 1
+    $global:topmost              = 1
 })
 $Label1.Add_MouseLeave({
-    $global:topmost = 0
+    $global:topmost              = 0
 })
 $PictureBox1.Add_MouseHover({
-    $global:topmost = 1
+    $global:topmost              = 1
 })
 $PictureBox1.Add_MouseLeave({
-    $global:topmost = 0
+    $global:topmost              = 0
 })
 $Button_ok.Add_MouseHover({
-    $global:topmost = 0
+    $global:topmost              = 0
 })
 $Button_ok.Add_MouseLeave({
-    $global:topmost = 1
+    $global:topmost              = 1
 })
 
 #Show Text on Hover
@@ -126,34 +126,34 @@ $CheckBox1.add_click({
 [System.Reflection.Assembly]::LoadWithPartialName('System.Drawing') 		 | out-null
 [System.Reflection.Assembly]::LoadWithPartialName('WindowsFormsIntegration') | out-null
 
-$global:i = 0
+$global:i                        = 0
 
-$time = 2
+$time                            = 2
 
-$icon = [System.Drawing.Icon]::ExtractAssociatedIcon("C:\Windows\System32\Netplwiz.exe") #Your Tray Icon here
+$icon                            = [System.Drawing.Icon]::ExtractAssociatedIcon("C:\Windows\System32\Netplwiz.exe") #Your Tray Icon here
 
-$Main_Tool_Icon = New-Object System.Windows.Forms.NotifyIcon #Tray Icon
-$Main_Tool_Icon.Text = "QuickNotify - click to Exit" #Popup Text on MouseHover
-$Main_Tool_Icon.Icon = $icon
-$Main_Tool_Icon.Visible = $true
+$Main_Tool_Icon                  = New-Object System.Windows.Forms.NotifyIcon #Tray Icon
+$Main_Tool_Icon.Text             = "QuickNotify - click to Exit" #Popup Text on MouseHover
+$Main_Tool_Icon.Icon             = $icon
+$Main_Tool_Icon.Visible          = $true
 $Main_Tool_Icon.Add_Click({
-    $Main_Tool_Icon.Visible = $false
+    $Main_Tool_Icon.Visible      = $false
     while($global:sitze -gt 0){
-        $global:sitze -= 2
-        $Coordinates = switch ($Poistion)
+        $global:sitze           -= 2
+        $Coordinates             = switch ($Poistion)
         {
             'LeftTop' { 0, 0 }
             'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze + 2 ) }
             'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
             'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze +2) }
         }
-        $Form.Location = New-Object System.Drawing.Point($Coordinates)
+        $Form.Location           = New-Object System.Drawing.Point($Coordinates)
         Start-Sleep -Milliseconds 1
     }
     [void]$Form.Hide()
  })
 
-$global:sitze = 0
+$global:sitze                    = 0
 
 [void]$Form.Show()
 
@@ -164,48 +164,48 @@ $global:sitze = 0
 do{[System.Windows.Forms.Application]::DoEvents()
     [void]$Form.Update()
     Start-Sleep -Milliseconds 1 #Improve CPU Performance
-    if([System.Windows.Forms.Cursor]::Position.X -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width -and [System.Windows.Forms.Cursor]::Position.Y -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height -AND $sitze -gt $Form.Height -and $global:a -eq 1){
-        $CheckBox1.Visible = $true #CheckBox and Button are only visible when the mouse is on the MassageBox
-        $Button_ok.Visible = $true
+    if([System.Windows.Forms.Cursor]::Position.X -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width -and [System.Windows.Forms.Cursor]::Position.Y -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height -and $sitze -gt $Form.Height -and $global:a -eq 1){
+        $CheckBox1.Visible       = $true #CheckBox and Button are only visible when the mouse is on the MassageBox
+        $Button_ok.Visible       = $true
         if($global:topmost -eq $true){
-            $Form.TopMost = $true
+            $Form.TopMost        = $true
         }
         else{
-            $Form.topmost = $false
+            $Form.topmost        = $false
         }
         }
     else{
-        $CheckBox1.Visible = $false
-        $Button_ok.Visible = $false
-        $Form.TopMost = $false
+        $CheckBox1.Visible       = $false
+        $Button_ok.Visible       = $false
+        $Form.TopMost            = $false
     }
-    $counter += 1 #Counter
+    $counter                    += 1 #Counter
     if(-not($sitze -gt $Form.Height) -and $counter -lt 2000){ #Popup Animation
-        $global:sitze += 2 #Animationspeed
-        $Coordinates = switch ($Poistion)
+        $global:sitze           += 2 #Animationspeed
+        $Coordinates             = switch ($Poistion)
     {
         'LeftTop' { 0, 0 }
         'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze + 2 ) }
         'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
         'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze +2) }
     }
-    $Form.Location = New-Object System.Drawing.Point($Coordinates)
+    $Form.Location               = New-Object System.Drawing.Point($Coordinates)
     }
 
     if($counter -gt 2000){ #Counter hide the MessageBox if reaches 2000
-        $global:sitze -= 2 #Animationspeed
-        $Coordinates = switch ($Poistion)
+        $global:sitze           -= 2 #Animationspeed
+        $Coordinates             = switch ($Poistion)
     { #Get Screensize (WorkingArea = without taskbar)
         'LeftTop' { 0, 0 }
         'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze + 2 ) }
         'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
         'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze +2) }
     }
-    $Form.Location = New-Object System.Drawing.Point($Coordinates) #Move the MassageBox to the new Location
+    $Form.Location               = New-Object System.Drawing.Point($Coordinates) #Move the MassageBox to the new Location
     if($global:sitze -lt 0){ #Hide the MessageBox if it is not visible in the Working Area
-        $Form.Visible = $false
+        $Form.Visible            = $false
     }
     }
 }until($Form.Visible -eq $false)
 
-$Main_Tool_Icon.Visible = $false #Hide Tray Icon if QickNotify Massagebox is not visible
+$Main_Tool_Icon.Visible          = $false #Hide Tray Icon if QickNotify Massagebox is not visible
