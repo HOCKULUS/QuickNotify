@@ -10,6 +10,15 @@ $Form.BackColor                  = [System.Drawing.ColorTranslator]::FromHtml("#
 $Form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
 $Form.Location.X = 123
 $Form.Location.y = 123
+$Poistion = 'RightBottom'
+$Coordinates = switch ($Poistion)
+{
+    'LeftTop' { 0, 0 }
+    'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height) }
+    'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
+    'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height) }
+}
+#$Form.Location = New-Object System.Drawing.Point($Coordinates)
 $Form.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 
 $Button_ok                       = New-Object system.Windows.Forms.Button
