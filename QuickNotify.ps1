@@ -3,22 +3,24 @@ Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 $Form                            = New-Object system.Windows.Forms.Form
-$Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
+$Form.ClientSize                 = New-Object System.Drawing.Point(0,0)
 $Form.text                       = "Form"
 $Form.TopMost                    = $true
 $Form.BackColor                  = [System.Drawing.ColorTranslator]::FromHtml("#ffffff")
 $Form.FormBorderStyle            = [System.Windows.Forms.FormBorderStyle]::None
-$Form.Location.X                 = -300
-$Form.Location.y                 = -300
+$Form.Location.X                 = 30
+$Form.Location.y                 = 300
 $Poistion                        = 'RightBottom'
 $Coordinates                     = switch ($Poistion)
 {
-    'LeftTop' { 0, 0 }
-    'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height) }
-    'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
+    #'LeftTop' { 0, 0 }
+    'LeftBottom'  { 0, $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom) }
+    #'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
     'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height) }
 }
+
 $Form.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
+$Form.Location           = New-Object System.Drawing.Point($Coordinates)
 
 $Button_ok                       = New-Object system.Windows.Forms.Button
 $Button_ok.text                  = "OK"
@@ -55,7 +57,7 @@ $CheckBox1.location              = New-Object System.Drawing.Point(11,96)
 $CheckBox1.Font                  = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 $CheckBox1.ForeColor             = [System.Drawing.ColorTranslator]::FromHtml("#9b9b9b")
 
-$Form.controls.AddRange(@($Button_ok,$PictureBox1,$Label1,$CheckBox1))
+$Form.controls.AddRange(@($Button_ok,$PictureBox1,$Label1))
 
 $global:a                        = 1 #if $a is 0 the MasseBox topmost set to false
 
@@ -160,8 +162,9 @@ $global:sitze                    = 0
 #While QickNotify Massagebox is visible
 #--------------------------------------
 #--------------------------------------
-
+Start-Sleep -Seconds 1
 do{[System.Windows.Forms.Application]::DoEvents()
+$Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
     [void]$Form.Update()
     Start-Sleep -Milliseconds 1 #Improve CPU Performance
     if([System.Windows.Forms.Cursor]::Position.X -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width -and [System.Windows.Forms.Cursor]::Position.Y -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height -and $sitze -gt $Form.Height -and $global:a -eq 1){
@@ -180,7 +183,7 @@ do{[System.Windows.Forms.Application]::DoEvents()
         $Form.TopMost            = $false
     }
     $counter                    += 1 #Counter
-    if(-not($sitze -gt $Form.Height) -and $counter -lt 2000){ #Popup Animation
+    if(-not($sitze -gt $Form.Height) -and $counter -lt 2000){ #Popup Animation show duration* show in line 198 to change the time $counter 
         $global:sitze           += 2 #Animationspeed
         $Coordinates             = switch ($Poistion)
     {
@@ -192,7 +195,7 @@ do{[System.Windows.Forms.Application]::DoEvents()
     $Form.Location               = New-Object System.Drawing.Point($Coordinates)
     }
 
-    if($counter -gt 2000){ #Counter hide the MessageBox if reaches 2000
+    if($counter -gt 2000){ #Counter hide the MessageBox if reaches 2000*
         $global:sitze           -= 2 #Animationspeed
         $Coordinates             = switch ($Poistion)
     { #Get Screensize (WorkingArea = without taskbar)
