@@ -3,8 +3,10 @@ Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 $Form                            = New-Object system.Windows.Forms.Form
-$Form.ClientSize                 = New-Object System.Drawing.Point(0,0)
+$Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
 $Form.text                       = "Form"
+$Form.AllowTransparency = $true
+$Form.Opacity = 0
 $Form.TopMost                    = $true
 $Form.BackColor                  = [System.Drawing.ColorTranslator]::FromHtml("#ffffff")
 $Form.FormBorderStyle            = [System.Windows.Forms.FormBorderStyle]::None
@@ -167,7 +169,7 @@ do{[System.Windows.Forms.Application]::DoEvents()
 $Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
     [void]$Form.Update()
     Start-Sleep -Milliseconds 1 #Improve CPU Performance
-    if([System.Windows.Forms.Cursor]::Position.X -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width -and [System.Windows.Forms.Cursor]::Position.Y -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height -and $sitze -gt $Form.Height -and $global:a -eq 1){
+    if([System.Windows.Forms.Cursor]::Position.X -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width -and [System.Windows.Forms.Cursor]::Position.Y -gt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $Form.Height -and $sitze -gt $Form.Height -and $global:a -eq 1 -and ([System.Windows.Forms.Cursor]::Position.X -lt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width -and [System.Windows.Forms.Cursor]::Position.Y -lt [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom)){
         $CheckBox1.Visible       = $true #CheckBox and Button are only visible when the mouse is on the MassageBox
         $Button_ok.Visible       = $true
         if($global:topmost -eq $true){
@@ -192,6 +194,7 @@ $Form.ClientSize                 = New-Object System.Drawing.Point(374,126)
         'RightTop' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), 0 }
         'RightBottom' { $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width - $Form.Width), $([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Bottom - $global:sitze +2) }
     }
+    $Form.Opacity = 1
     $Form.Location               = New-Object System.Drawing.Point($Coordinates)
     }
 
