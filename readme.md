@@ -1,1 +1,3 @@
+# QuickNotify v1.0
 ![preview](preview.jpg)
+QuickNotify is a great tool because it allows for a high degree of customization when it comes to Windows notifications. Unlike the standard Windows notifications which can be boring and lackluster, QuickNotify allows you to create notifications that are unique and tailored to your preferences. This feature is particularly useful for users who want to enhance their productivity and workflow by creating notifications that are more informative, engaging, and visually appealing. Additionally, QuickNotify is easy to use and can be set up quickly, making it a great option for users who need a reliable notification tool that can be customized to their needs.
